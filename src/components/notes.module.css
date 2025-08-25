@@ -157,6 +157,11 @@
   font-family: inherit;
   outline: none;
   overflow: auto;
+  color: #333;
+}
+
+.noteContent::placeholder {
+  color: #888;
 }
 
 /* Empty state */
