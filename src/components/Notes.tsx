@@ -170,77 +170,46 @@ const Notes: React.FC<NotesProps> = ({ initialNotes = [], onNotesChange }) => {
   };
 
   return (
-    <div className="notes-container">
-      <div className="notes-toolbar">
-        <button onClick={addNote} className="add-note-btn">
+    <div className={styles.notesContainer}>
+      <div className={styles.notesToolbar}>
+        <button onClick={addNote} className={styles.addNoteBtn}>
           + Add Note
         </button>
         {notes.length > 0 && (
-          <button onClick={clearAllNotes} className="clear-all-btn">
+          <button onClick={clearAllNotes} className={styles.clearAllBtn}>
             Clear All
           </button>
         )}
-        <span className="notes-count">
+        <span className={styles.notesCount}>
           {notes.length} note{notes.length !== 1 ? "s" : ""}
         </span>
       </div>
 
-      <div ref={containerRef} className="notes-workspace">
+      <div ref={containerRef} className={styles.notesWorkspace}>
         {notes.map((note) => (
           <div
             key={note.id}
-            className="sticky-note"
+            className={styles.stickyNote}
             style={{
-              position: "absolute",
               left: note.x,
               top: note.y,
               width: note.width,
               height: note.height,
               backgroundColor: note.color,
               zIndex: note.zIndex,
-              border: "1px solid rgba(0,0,0,0.1)",
-              borderRadius: "8px",
-              boxShadow: "0 4px 8px rgba(0,0,0,0.15)",
-              cursor:
-                dragState.isDragging && dragState.noteId === note.id
-                  ? "grabbing"
-                  : "grab",
-              userSelect: "none",
-              fontFamily: "Arial, sans-serif",
             }}
             onMouseDown={(e) => handleMouseDown(e, note.id)}
           >
             {/* Note Header */}
-            <div
-              className="note-header"
-              style={{
-                padding: "8px",
-                borderBottom: "1px solid rgba(0,0,0,0.1)",
-                display: "flex",
-                justifyContent: "space-between",
-                alignItems: "center",
-                backgroundColor: "rgba(0,0,0,0.05)",
-                borderRadius: "8px 8px 0 0",
-              }}
-            >
-              <div
-                className="color-picker"
-                style={{ display: "flex", gap: "2px" }}
-              >
+            <div className={styles.noteHeader}>
+              <div className={styles.colorPicker}>
                 {COLORS.slice(0, 4).map((color) => (
                   <div
                     key={color}
-                    style={{
-                      width: "12px",
-                      height: "12px",
-                      backgroundColor: color,
-                      border:
-                        note.color === color
-                          ? "2px solid #333"
-                          : "1px solid rgba(0,0,0,0.2)",
-                      borderRadius: "50%",
-                      cursor: "pointer",
-                    }}
+                    className={`${styles.colorDot} ${
+                      note.color === color ? styles.selected : ""
+                    }`}
+                    style={{ backgroundColor: color }}
                     onClick={(e) => {
                       e.stopPropagation();
                       updateNoteColor(note.id, color);
@@ -249,19 +218,7 @@ const Notes: React.FC<NotesProps> = ({ initialNotes = [], onNotesChange }) => {
                 ))}
               </div>
               <button
-                style={{
-                  background: "none",
-                  border: "none",
-                  fontSize: "16px",
-                  cursor: "pointer",
-                  color: "#666",
-                  padding: "0",
-                  width: "20px",
-                  height: "20px",
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                }}
+                className={styles.deleteBtn}
                 onClick={(e) => {
                   e.stopPropagation();
                   deleteNote(note.id);
@@ -285,89 +242,14 @@ const Notes: React.FC<NotesProps> = ({ initialNotes = [], onNotesChange }) => {
         ))}
 
         {notes.length === 0 && (
-          <div
-            style={{
-              position: "absolute",
-              top: "50%",
-              left: "50%",
-              transform: "translate(-50%, -50%)",
-              textAlign: "center",
-              color: "#666",
-              fontSize: "18px",
-            }}
-          >
+          <div className={styles.emptyState}>
             <p>No notes yet!</p>
-            <p style={{ fontSize: "14px", marginTop: "8px" }}>
+            <p className={styles.subtitle}>
               Click "Add Note" to create your first sticky note
             </p>
           </div>
         )}
       </div>
-
-      <style>{`
-        .notes-container {
-          padding: 20px;
-          font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
-        }
-
-        .notes-toolbar {
-          display: flex;
-          gap: 12px;
-          align-items: center;
-          margin-bottom: 16px;
-          padding: 12px;
-          background: #fff;
-          border-radius: 8px;
-          box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-        }
-
-        .add-note-btn {
-          background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-          color: white;
-          border: none;
-          padding: 10px 16px;
-          border-radius: 6px;
-          cursor: pointer;
-          font-weight: 500;
-          transition: transform 0.2s, box-shadow 0.2s;
-        }
-
-        .add-note-btn:hover {
-          transform: translateY(-1px);
-          box-shadow: 0 4px 8px rgba(0,0,0,0.15);
-        }
-
-        .clear-all-btn {
-          background: #ff6b6b;
-          color: white;
-          border: none;
-          padding: 8px 12px;
-          border-radius: 6px;
-          cursor: pointer;
-          font-size: 14px;
-          transition: background 0.2s;
-        }
-
-        .clear-all-btn:hover {
-          background: #ff5252;
-        }
-
-        .notes-count {
-          color: #666;
-          font-size: 14px;
-          margin-left: auto;
-        }
-
-        .sticky-note:hover {
-          box-shadow: 0 6px 12px rgba(0,0,0,0.2);
-        }
-
-        .notes-workspace {
-          background-image: 
-            radial-gradient(circle, #ddd 1px, transparent 1px);
-          background-size: 20px 20px;
-        }
-      `}</style>
     </div>
   );
 };

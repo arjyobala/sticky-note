@@ -1,4 +1,61 @@
-.notes-workspace {
+/* Main container */
+.notesContainer {
+  padding: 20px;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto",
+    sans-serif;
+}
+
+/* Toolbar */
+.notesToolbar {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  margin-bottom: 16px;
+  padding: 12px;
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.addNoteBtn {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  border: none;
+  padding: 10px 16px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.addNoteBtn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+.clearAllBtn {
+  background: #ff6b6b;
+  color: white;
+  border: none;
+  padding: 8px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: background 0.2s;
+}
+
+.clearAllBtn:hover {
+  background: #ff5252;
+}
+
+.notesCount {
+  color: #666;
+  font-size: 14px;
+  margin-left: auto;
+}
+
+/* Workspace */
+.notesWorkspace {
   position: relative;
   width: 100%;
   height: 80vh;
@@ -6,9 +63,75 @@
   border-radius: 8px;
   overflow: hidden;
   background-color: #f8f9fa;
+  background-image: radial-gradient(circle, #ddd 1px, transparent 1px);
+  background-size: 20px 20px;
 }
 
-.note-content {
+/* Sticky notes */
+.stickyNote {
+  position: absolute;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+  cursor: grab;
+  user-select: none;
+  font-family: Arial, sans-serif;
+}
+
+.stickyNote:active {
+  cursor: grabbing;
+}
+
+.stickyNote:hover {
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+}
+
+/* Note header */
+.noteHeader {
+  padding: 8px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: rgba(0, 0, 0, 0.05);
+  border-radius: 8px 8px 0 0;
+}
+
+/* Color picker */
+.colorPicker {
+  display: flex;
+  gap: 2px;
+}
+
+.colorDot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  cursor: pointer;
+  border: 1px solid rgba(0, 0, 0, 0.2);
+}
+
+.colorDot.selected {
+  border: 2px solid #333;
+}
+
+/* Delete button */
+.deleteBtn {
+  background: none;
+  border: none;
+  font-size: 16px;
+  cursor: pointer;
+  color: #666;
+  padding: 0;
+  width: 20px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Note content */
+.noteContent {
   width: 100%;
   height: calc(100% - 40px);
   border: none;
@@ -19,4 +142,24 @@
   font-family: inherit;
   outline: none;
   overflow: auto;
+}
+
+/* Empty state */
+.emptyState {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  color: #666;
+  font-size: 18px;
+}
+
+.emptyState p {
+  margin: 0;
+}
+
+.emptyState .subtitle {
+  font-size: 14px;
+  margin-top: 8px;
 }
